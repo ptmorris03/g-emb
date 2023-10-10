@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "gemb"
+version = "0.1.0"
+description = "g-emb"
+authors = ["ptmorris03@gmail.com"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+selene-sdk = "^0.5.1"
+pydantic = "^2.4.2"
+transformers = "^4.34.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
