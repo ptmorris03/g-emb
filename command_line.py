@@ -9,7 +9,8 @@ app = typer.Typer()
 @app.command()
 def load_genome(
     data_folder: Path = typer.Option(
-        ..., help="Path to the data folder containing .fasta files for genomes"
+        default="data/",
+        help="Path to the data folder containing .fasta files for genomes",
     )
 ):
     """
@@ -24,11 +25,16 @@ def load_genome(
         genome = Genome(str(fasta_file))
         typer.echo(f"Loaded genome from {fasta_file}")
 
+        for chromosome, length in genome.get_chr_lens():
+            sequence = genome.get_sequence_from_coords(chromosome, start=0, end=length)
+            typer.echo(f" - {chromosome} - {len(sequence):10d} - {sequence[:32]}")
+
+
 
 @app.command()
 def load_proteome(
     data_folder: Path = typer.Option(
-        ...,
+        default="data/",
         help="Path to the data folder containing .fasta files for proteomes",
     )
 ):
