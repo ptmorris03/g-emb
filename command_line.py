@@ -1,7 +1,16 @@
+"""
+command_line.py
+ * load_genome()
+ * load_proteome()
+"""
 from pathlib import Path
+from typing import Optional
 
 import typer
+from pydantic import BaseModel, DirectoryPath, model_validator
 from selene_sdk.sequences import Genome, Proteome
+
+from gemb.data import GenomeDatasetConfig
 
 app = typer.Typer()
 
@@ -22,13 +31,18 @@ def load_genome(
         raise typer.Exit(code=1)
 
     for fasta_file in fasta_files:
-        genome = Genome(str(fasta_file))
+        data_config = GenomeDatasetConfig(fasta_path=fasta_file)
+        cfg = data_config.model_dump()
+        genome = Genome(cfg["fasta_path"])
         typer.echo(f"Loaded genome from {fasta_file}")
 
         for chromosome, length in genome.get_chr_lens():
-            sequence = genome.get_sequence_from_coords(chromosome, start=0, end=length)
-            typer.echo(f" - {chromosome} - {len(sequence):10d} - {sequence[:32]}")
-
+            sequence = genome.get_sequence_from_coords(
+                chromosome, start=0, end=length
+            )
+            typer.echo(
+                f" - {chromosome} - {len(sequence):10d} - {sequence[:32]}"
+            )
 
 
 @app.command()
