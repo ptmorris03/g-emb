@@ -1,3 +1,7 @@
+:::warning
+This README.md file was auto-generated
+:::
+
 # Genomic Data Processing Project
 
 This project is structured to facilitate the processing and analysis of genomic data, specifically focusing on the GRCh38 genome. It employs Python for data processing and analysis, and utilizes Poetry for dependency management.
