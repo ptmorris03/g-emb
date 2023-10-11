@@ -14,7 +14,7 @@ transformers = "^4.34.0"
 isort = "^5.12.0"
 
 [tool.poetry.scripts]
-my_package_cli = "command_line:app"
+gemb = "command_line:app"
 
 [build-system]
 requires = ["poetry-core"]
