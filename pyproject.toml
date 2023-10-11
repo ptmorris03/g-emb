@@ -7,7 +7,6 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.11"
-selene-sdk = "^0.5.1"
 pydantic = "^2.4.2"
 transformers = "^4.34.0"
 
