@@ -2,14 +2,13 @@
 name = "gemb"
 version = "0.1.0"
 description = "g-emb"
-authors = ["ptmorris03@gmail.com"]
+authors = ["Paul Morris <ptmorris03@gmail.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.8"
 pydantic = "^2.4.2"
 transformers = "^4.34.0"
-
 
 [build-system]
 requires = ["poetry-core"]
