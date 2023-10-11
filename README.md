@@ -1,6 +1,4 @@
-:::warning
-This README.md file was auto-generated
-:::
+⚠️ This README.md file was written by a language model ⚠️
 
 # Genomic Data Processing Project
 
