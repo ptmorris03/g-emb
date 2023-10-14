@@ -16,7 +16,7 @@ torch = "2.1.0"
 isort = "^5.12.0"
 
 [tool.poetry.scripts]
-gemb = "command_line:app"
+gemb = "gemb.cli:app"
 
 [build-system]
 requires = ["poetry-core"]
