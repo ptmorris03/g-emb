@@ -3,16 +3,19 @@ label.py
  * Label
 """
 from enum import Enum
+from typing import Literal
 
 import numpy as np
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, Field, field_validator, model_validator
 from pydantic.functional_validators import AfterValidator
+from pydantic.types import StringConstraints
 from typing_extensions import Annotated
 
-LowerStr = Annotated[str, AfterValidator(lambda string: string.lower())]
+LowerStr = Annotated[str, StringConstraints(to_lower=True)]
+BaseType = Literal["a", "t", "g", "c", "n"]
 
 
-class LabelId(BaseModel):
+class Label(BaseModel):
     """
     Label type used to retrieve model heads
 
@@ -22,22 +25,31 @@ class LabelId(BaseModel):
     value : the value of the label
     """
 
-    key: LowerStr
-    value: LowerStr
+    key: str
+    value: str
 
 
-class Label(BaseModel):
+class BaseLabel(Label):
+    value: Annotated[LowerStr, BaseType]
+
+
+class CaseLabel(Label):
+    @field_validator("value")
+    @classmethod
+    def set_case(cls, value: str) -> bool:
+        return value == value.lower()
+
+
+class Span(BaseModel):
     """
-    A label of a contiguous genomic sequence
+    A span of a contiguous genomic sequence
 
     Parameters
     ==========
-    name : the string key and label value used to identify the label
     start : the start index of the label in the sequence, inclusive
     end : the end position of the label in the sequence, inclusive
     """
 
-    label: LabelId
     start: int = Field(ge=0, default=0)
     end: int = Field(ge=0, default=np.inf)
 
@@ -45,8 +57,7 @@ class Label(BaseModel):
     def assert_end_ge_start(cls, model: "LabelSpan") -> None:
         if model.end < model.start:
             raise ValueError(
-                "Label end must be greater than or equal to start",
-                f" * name: {model.label}",
+                "end must be greater than or equal to start",
                 f" * start: {model.start}",
                 f" * end: {model.end}",
             )
