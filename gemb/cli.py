@@ -1,16 +1,20 @@
 """
 command_line.py
- * load_genome()
- * load_proteome()
+ * This module provides command-line interface (CLI) commands for loading genome and proteome data.
+
+Functions:
+-----------
+ * load_genome() - Load genome sequences from .fasta files.
+ * load_proteome() - Load proteome sequences from .fasta files.
 """
+
 from pathlib import Path
-from typing import Optional
 
 import typer
-from pydantic import BaseModel, DirectoryPath, model_validator
 from selene_sdk.sequences import Genome, Proteome
 
-from gemb.data import GenomeDatasetConfig
+from gemb.data import \
+    GenomeDatasetConfig  # Assuming this import works in your environment
 
 app = typer.Typer()
 
@@ -23,7 +27,17 @@ def load_genome(
     )
 ):
     """
-    Load a Genome using selene-sdk from .fasta files in the specified data folder.
+    Load a Genome using selene-sdk from .fasta files located in a specified data folder.
+
+    Parameters
+    ----------
+    data_folder : Path
+        The folder where .fasta files for genomes are located. Defaults to 'data/'.
+
+    Raises
+    ------
+    typer.Exit
+        Exits the program with code 1 if no .fasta files are found.
     """
     fasta_files = list(data_folder.glob("genomes/*.fasta"))
     if not fasta_files:
@@ -53,7 +67,17 @@ def load_proteome(
     )
 ):
     """
-    Load a Proteome using selene-sdk from .fasta files in the specified data folder.
+    Load a Proteome using selene-sdk from .fasta files located in a specified data folder.
+
+    Parameters
+    ----------
+    data_folder : Path
+        The folder where .fasta files for proteomes are located. Defaults to 'data/'.
+
+    Raises
+    ------
+    typer.Exit
+        Exits the program with code 1 if no .fasta files are found.
     """
     fasta_files = list(data_folder.glob("proteins/*.fasta"))
     if not fasta_files:

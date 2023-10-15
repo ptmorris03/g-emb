@@ -41,6 +41,7 @@ class BaseLabel(Label):
     value : LowerStr
         The label's value which is always lowercased and one of the base types (a, t, g, c, n).
     """
+
     value: Annotated[LowerStr, BaseType]
 
 
